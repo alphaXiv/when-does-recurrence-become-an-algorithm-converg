@@ -1,7 +1,7 @@
 {
   "group": "S4",
   "contract_multiplier": 1.0,
-  "seeds": [1101, 1102, 1103, 1104],
+  "seeds": [3101, 3102, 3103, 3104],
   "stage_max_lengths": [4, 8, 16, 32],
   "min_steps_per_stage": 6000,
   "max_steps_per_stage": 12000,
