@@ -262,7 +262,7 @@ def activation_damage(
             patch=(patch_loop, position, donor, cfg["patch_alpha"]),
         ).argmax(-1)
         damage = (patched != clean).float().mean(0)
-        active = torch.where(damage >= 0.05)[0]
+        active = torch.where(damage >= cfg.get("damage_threshold", 0.05))[0]
         extent = int(active.max()) - position if len(active) else 0
         upstream = float(damage[:position].mean()) if position else 0.0
         rows.append(
@@ -279,6 +279,7 @@ def activation_damage(
     )
     return {
         "alpha": cfg["patch_alpha"],
+        "damage_threshold": cfg.get("damage_threshold", 0.05),
         "source_position_zero_based": position,
         "cone_speed": slope,
         "cone_r2": r2,
