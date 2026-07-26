@@ -152,7 +152,7 @@ def frontier_from_accuracy(acc: torch.Tensor, threshold: float) -> list[int]:
         good = row >= threshold
         bad = torch.where(~good)[0]
         values.append(int(bad[0]) if len(bad) else int(row.numel()))
-    return list(np.maximum.accumulate(values).astype(int))
+    return [int(value) for value in np.maximum.accumulate(values)]
 
 
 def measure_frontier(
@@ -367,7 +367,8 @@ def train_one(cfg: dict[str, Any], rank: int) -> dict[str, Any]:
         x, y = sample_batch(
             cfg["eval_batch_size"], length, table, device, fixed_length=length
         )
-        all_logits = model(x, max_loops, return_all=True)
+        with torch.no_grad():
+            all_logits = model(x, max_loops, return_all=True)
         frontier[str(length)] = {
             "max_eval_loops": max_loops,
             **measure_frontier(all_logits, y, thresholds),
