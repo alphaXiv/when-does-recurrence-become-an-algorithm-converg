@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 520" role="img" aria-label="Activation damage is directed, but its cone speed is not stable">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="72" y="42" font-family="system-ui,sans-serif" font-size="24" font-weight="700" fill="#152238">Activation damage is directed, but its cone speed is not stable</text>
+<text x="72" y="68" font-family="system-ui,sans-serif" font-size="14" fill="#64748b">Cone slopes from full-resampling patches. Dashed segments mark each model's measured frontier speed.</text>
+<line x1="88" x2="884" y1="448.0" y2="448.0" stroke="#dbe3ee" stroke-width="1"/>
+<text x="76.0" y="453.0" text-anchor="end" font-family="system-ui,sans-serif" font-size="12" font-weight="400" fill="#64748b">0</text>
+<line x1="88" x2="884" y1="367.1" y2="367.1" stroke="#dbe3ee" stroke-width="1"/>
+<text x="76.0" y="372.1" text-anchor="end" font-family="system-ui,sans-serif" font-size="12" font-weight="400" fill="#64748b">0.5</text>
+<line x1="88" x2="884" y1="286.2" y2="286.2" stroke="#dbe3ee" stroke-width="1"/>
+<text x="76.0" y="291.2" text-anchor="end" font-family="system-ui,sans-serif" font-size="12" font-weight="400" fill="#64748b">1</text>
+<line x1="88" x2="884" y1="205.3" y2="205.3" stroke="#dbe3ee" stroke-width="1"/>
+<text x="76.0" y="210.3" text-anchor="end" font-family="system-ui,sans-serif" font-size="12" font-weight="400" fill="#64748b">1.5</text>
+<line x1="88" x2="884" y1="124.4" y2="124.4" stroke="#dbe3ee" stroke-width="1"/>
+<text x="76.0" y="129.4" text-anchor="end" font-family="system-ui,sans-serif" font-size="12" font-weight="400" fill="#64748b">2</text>
+<line x1="121.2" x2="121.2" y1="92" y2="448" stroke="#dbe3ee" stroke-width="1"/>
+<text x="121.2" y="472.0" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="400" fill="#64748b">1</text>
+<line x1="320.2" x2="320.2" y1="92" y2="448" stroke="#dbe3ee" stroke-width="1"/>
+<text x="320.2" y="472.0" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="400" fill="#64748b">4</text>
+<line x1="585.5" x2="585.5" y1="92" y2="448" stroke="#dbe3ee" stroke-width="1"/>
+<text x="585.5" y="472.0" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="400" fill="#64748b">8</text>
+<line x1="850.8" x2="850.8" y1="92" y2="448" stroke="#dbe3ee" stroke-width="1"/>
+<text x="850.8" y="472.0" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="400" fill="#64748b">12</text>
+<line x1="88" x2="884" y1="448" y2="448" stroke="#152238" stroke-width="1.5"/>
+<line x1="88" x2="88" y1="92" y2="448" stroke="#152238" stroke-width="1.5"/>
+<text x="486.0" y="495.0" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="400" fill="#152238">patch condition × seed</text>
+<text x="22" y="270.0" transform="rotate(-90 22 270.0)" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" fill="#152238">measured damage-cone speed</text>
+<line x1="101.3" x2="340.1" y1="288.8" y2="288.8" stroke="#ea580c" stroke-width="2" stroke-dasharray="6 5"/>
+<line x1="366.6" x2="870.7" y1="126.0" y2="126.0" stroke="#2563eb" stroke-width="2" stroke-dasharray="6 5"/>
+<circle cx="121.2" cy="390.7" r="7" fill="#ea580c" stroke="#fff" stroke-width="2"/>
+<circle cx="187.5" cy="424.9" r="7" fill="#ea580c" stroke="#fff" stroke-width="2"/>
+<circle cx="253.8" cy="436.5" r="7" fill="#ea580c" stroke="#fff" stroke-width="2"/>
+<circle cx="320.2" cy="435.5" r="7" fill="#ea580c" stroke="#fff" stroke-width="2"/>
+<circle cx="386.5" cy="448.0" r="7" fill="#2563eb" stroke="#fff" stroke-width="2"/>
+<circle cx="452.8" cy="448.0" r="7" fill="#2563eb" stroke="#fff" stroke-width="2"/>
+<circle cx="519.2" cy="448.0" r="7" fill="#2563eb" stroke="#fff" stroke-width="2"/>
+<circle cx="585.5" cy="448.0" r="7" fill="#2563eb" stroke="#fff" stroke-width="2"/>
+<circle cx="651.8" cy="115.9" r="7" fill="#2563eb" stroke="#fff" stroke-width="2"/>
+<circle cx="718.2" cy="442.5" r="7" fill="#2563eb" stroke="#fff" stroke-width="2"/>
+<circle cx="784.5" cy="448.0" r="7" fill="#2563eb" stroke="#fff" stroke-width="2"/>
+<circle cx="850.8" cy="448.0" r="7" fill="#2563eb" stroke="#fff" stroke-width="2"/>
+<text x="220.7" y="279.8" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="400" fill="#ea580c">unit-speed frontier</text>
+<text x="598.8" y="117.0" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="400" fill="#2563eb">demand-2 frontier</text>
+<text x="718.2" y="142.9" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#15803d">1 of 12 compatible</text>
+<text x="220.7" y="476.0" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="400" fill="#ea580c">unit, source pos. 1</text>
+<text x="486.0" y="476.0" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="400" fill="#2563eb">demand 2, pos. 1</text>
+<text x="751.3" y="476.0" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="400" fill="#2563eb">demand 2, pos. 8</text>
+</svg>
