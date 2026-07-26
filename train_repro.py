@@ -251,7 +251,9 @@ def activation_damage(
     x, y = sample_batch(batch, length, table, device, fixed_length=length)
     donor_x, _ = sample_batch(batch, length, table, device, fixed_length=length)
     clean = model(x, loops).argmax(-1)
-    position = 1
+    position = int(cfg.get("patch_position", 1))
+    if not 0 <= position < length:
+        raise ValueError(f"patch_position={position} is outside length {length}")
     patch_loops = sorted(set(max(1, int(loops * f)) for f in (0.2, 0.4, 0.6, 0.8)))
     rows = []
     for patch_loop in patch_loops:
