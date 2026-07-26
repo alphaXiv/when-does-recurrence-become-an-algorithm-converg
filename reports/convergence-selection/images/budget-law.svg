@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520">
+<rect width="900" height="520" fill="#fbfdff"/>
+<text x="54" y="42" font-family="Inter,Arial,sans-serif" font-size="25" font-weight="700" fill="#17212b">The learned frontier tracks the training contract</text>
+<text x="54" y="68" font-family="Inter,Arial,sans-serif" font-size="14" fill="#64748b">Filled circles: 0.44M-parameter S4 models; open squares: 1.72M-parameter robustness series</text>
+<line x1="92" y1="406.1" x2="850" y2="406.1" stroke="#dbe4ee"/>
+<text x="80" y="411.1" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="13" fill="#64748b">0.5</text>
+<line x1="92" y1="307.0" x2="850" y2="307.0" stroke="#dbe4ee"/>
+<text x="80" y="312.0" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="13" fill="#64748b">1</text>
+<line x1="92" y1="207.9" x2="850" y2="207.9" stroke="#dbe4ee"/>
+<text x="80" y="212.9" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="13" fill="#64748b">2</text>
+<line x1="92" y1="108.8" x2="850" y2="108.8" stroke="#dbe4ee"/>
+<text x="80" y="113.8" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="13" fill="#64748b">4</text>
+<line x1="161.9" y1="92" x2="161.9" y2="438" stroke="#dbe4ee"/>
+<text x="161.9" y="462" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" fill="#64748b">0.5</text>
+<line x1="379.0" y1="92" x2="379.0" y2="438" stroke="#dbe4ee"/>
+<text x="379.0" y="462" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" fill="#64748b">1</text>
+<line x1="596.0" y1="92" x2="596.0" y2="438" stroke="#dbe4ee"/>
+<text x="596.0" y="462" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" fill="#64748b">2</text>
+<line x1="813.1" y1="92" x2="813.1" y2="438" stroke="#dbe4ee"/>
+<text x="813.1" y="462" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" fill="#64748b">4</text>
+<line x1="92" y1="438" x2="850" y2="438" stroke="#17212b" stroke-width="1.5"/>
+<line x1="92" y1="92" x2="92" y2="438" stroke="#17212b" stroke-width="1.5"/>
+<text x="471.0" y="500" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#17212b">contract demand  n / T</text>
+<text x="22" y="265.0" text-anchor="middle" transform="rotate(-90 22 265.0)" font-family="Inter,Arial,sans-serif" font-size="15" fill="#17212b">measured positions per loop</text>
+<line x1="92.0" y1="438.0" x2="850.0" y2="92.0" stroke="#64748b" stroke-width="2" stroke-dasharray="7 6"/>
+<line x1="161.9" y1="416.4" x2="161.9" y2="382.9" stroke="#1464f4" stroke-width="2"/>
+<circle cx="161.9" cy="403.6" r="7" fill="#1464f4" stroke="white" stroke-width="2"/>
+<line x1="252.0" y1="366.5" x2="252.0" y2="349.0" stroke="#1464f4" stroke-width="2"/>
+<circle cx="252.0" cy="356.1" r="7" fill="#1464f4" stroke="white" stroke-width="2"/>
+<line x1="379.0" y1="317.7" x2="379.0" y2="307.0" stroke="#1464f4" stroke-width="2"/>
+<circle cx="379.0" cy="309.4" r="7" fill="#1464f4" stroke="white" stroke-width="2"/>
+<line x1="596.0" y1="209.4" x2="596.0" y2="207.9" stroke="#1464f4" stroke-width="2"/>
+<circle cx="596.0" cy="208.3" r="7" fill="#1464f4" stroke="white" stroke-width="2"/>
+<rect x="246.0" y="345.5" width="12" height="12" fill="#fbfdff" stroke="#009a88" stroke-width="3"/>
+<rect x="373.0" y="303.2" width="12" height="12" fill="#fbfdff" stroke="#009a88" stroke-width="3"/>
+<rect x="590.0" y="204.4" width="12" height="12" fill="#fbfdff" stroke="#009a88" stroke-width="3"/>
+<rect x="807.1" y="127.5" width="12" height="12" fill="#fbfdff" stroke="#009a88" stroke-width="3"/>
+<rect x="585" y="340" width="245" height="70" rx="10" fill="white" stroke="#dbe4ee"/>
+<text x="602" y="368" font-family="Inter,Arial,sans-serif" font-size="15" font-weight="700" fill="#17212b">S4 fit: exponent 0.969 ± 0.034</text>
+<text x="602" y="392" font-family="Inter,Arial,sans-serif" font-size="14" fill="#64748b">log-space R² = 0.998; dashed = ideal</text>
+</svg>

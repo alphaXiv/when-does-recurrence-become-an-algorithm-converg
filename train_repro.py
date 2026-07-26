@@ -56,7 +56,9 @@ class TiedLoopedTransformer(nn.Module):
         super().__init__()
         d = cfg["d_model"]
         self.embed = nn.Embedding(24, d)
-        self.inject = nn.Linear(2 * d, d)
+        self.inject = (
+            nn.Linear(2 * d, d) if cfg.get("input_injection", True) else None
+        )
         layer = nn.TransformerEncoderLayer(
             d_model=d,
             nhead=cfg["n_heads"],
@@ -70,11 +72,12 @@ class TiedLoopedTransformer(nn.Module):
         self.readout_norm = nn.LayerNorm(d)
         self.head = nn.Linear(d, 24)
         # Start as a stable recurrent map while leaving input reinjection learnable.
-        nn.init.zeros_(self.inject.bias)
-        with torch.no_grad():
-            self.inject.weight.zero_()
-            self.inject.weight[:, :d].copy_(torch.eye(d))
-            self.inject.weight[:, d:].copy_(0.1 * torch.eye(d))
+        if self.inject is not None:
+            nn.init.zeros_(self.inject.bias)
+            with torch.no_grad():
+                self.inject.weight.zero_()
+                self.inject.weight[:, :d].copy_(torch.eye(d))
+                self.inject.weight[:, d:].copy_(0.1 * torch.eye(d))
 
     @staticmethod
     def causal_mask(length: int, device: torch.device) -> torch.Tensor:
@@ -83,7 +86,11 @@ class TiedLoopedTransformer(nn.Module):
         )
 
     def step(self, hidden: torch.Tensor, embedding: torch.Tensor) -> torch.Tensor:
-        z = self.inject(torch.cat((hidden, embedding), dim=-1))
+        z = (
+            self.inject(torch.cat((hidden, embedding), dim=-1))
+            if self.inject is not None
+            else hidden
+        )
         return self.block(z, mask=self.causal_mask(z.shape[1], z.device))
 
     def forward(
@@ -152,7 +159,7 @@ def frontier_from_accuracy(acc: torch.Tensor, threshold: float) -> list[int]:
         good = row >= threshold
         bad = torch.where(~good)[0]
         values.append(int(bad[0]) if len(bad) else int(row.numel()))
-    return list(np.maximum.accumulate(values).astype(int))
+    return [int(value) for value in np.maximum.accumulate(values)]
 
 
 def measure_frontier(
@@ -251,7 +258,9 @@ def activation_damage(
     x, y = sample_batch(batch, length, table, device, fixed_length=length)
     donor_x, _ = sample_batch(batch, length, table, device, fixed_length=length)
     clean = model(x, loops).argmax(-1)
-    position = 1
+    position = int(cfg.get("patch_position", 1))
+    if not 0 <= position < length:
+        raise ValueError(f"patch_position={position} is outside length {length}")
     patch_loops = sorted(set(max(1, int(loops * f)) for f in (0.2, 0.4, 0.6, 0.8)))
     rows = []
     for patch_loop in patch_loops:
@@ -262,7 +271,9 @@ def activation_damage(
             patch=(patch_loop, position, donor, cfg["patch_alpha"]),
         ).argmax(-1)
         damage = (patched != clean).float().mean(0)
-        active = torch.where(damage >= 0.05)[0]
+        active = torch.where(
+            damage >= float(cfg.get("damage_threshold", 0.05))
+        )[0]
         extent = int(active.max()) - position if len(active) else 0
         upstream = float(damage[:position].mean()) if position else 0.0
         rows.append(
@@ -279,6 +290,7 @@ def activation_damage(
     )
     return {
         "alpha": cfg["patch_alpha"],
+        "damage_threshold": float(cfg.get("damage_threshold", 0.05)),
         "source_position_zero_based": position,
         "cone_speed": slope,
         "cone_r2": r2,
@@ -367,7 +379,8 @@ def train_one(cfg: dict[str, Any], rank: int) -> dict[str, Any]:
         x, y = sample_batch(
             cfg["eval_batch_size"], length, table, device, fixed_length=length
         )
-        all_logits = model(x, max_loops, return_all=True)
+        with torch.no_grad():
+            all_logits = model(x, max_loops, return_all=True)
         frontier[str(length)] = {
             "max_eval_loops": max_loops,
             **measure_frontier(all_logits, y, thresholds),

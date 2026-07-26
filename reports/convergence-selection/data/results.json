@@ -1,0 +1,59 @@
+{
+  "paper_id": "2607.20594",
+  "compute": {
+    "backend": "kubernetes",
+    "gpu_model": "NVIDIA RTX PRO 6000 Blackwell",
+    "peak_concurrent_gpus": 16,
+    "wall_hours": 1.376027
+  },
+  "primary_s4": [
+    {"demand": 0.5, "median_speed": 0.508877, "seed_speeds": [0.505627, 0.512127, 0.588091, 0.465202]},
+    {"demand": 0.666667, "median_speed": 0.709572, "seed_speeds": [0.699313, 0.659750, 0.719830, 0.745344]},
+    {"demand": 1.0, "median_speed": 0.983699, "seed_speeds": [1.0, 0.967397, 0.927675, 1.0]},
+    {"demand": 2.0, "median_speed": 1.994485, "seed_speeds": [1.979412, 2.0, 2.0, 1.988971]}
+  ],
+  "power_fit": {"exponent": 0.969341, "standard_error": 0.034192, "coefficient": 1.012159, "log_r2": 0.997518},
+  "independent_repeats": [
+    {"demand": 1.0, "median_speed": 0.992307, "seed_speeds": [1.002558, 0.982056, 0.980645, 1.016502]},
+    {"demand": 2.0, "median_speed": 1.989706, "seed_speeds": [2.0, 1.933929, 1.979412, 2.0]}
+  ],
+  "medium_width": [
+    {"demand": 0.666667, "median_speed": 0.732512, "seed_speeds": [0.769872, 0.678413, 0.695153, 0.772706]},
+    {"demand": 1.0, "median_speed": 0.984476, "seed_speeds": [0.984476, 0.984476, 0.984476, 0.981653]},
+    {"demand": 2.0, "median_speed": 1.966071, "seed_speeds": [1.9875, 1.942857, 1.944643, 2.0]},
+    {"demand": 4.0, "median_speed": 3.366667, "seed_speeds": [3.35, 1.945784, 3.383333, 3.438095]}
+  ],
+  "threshold_sensitivity": [
+    {"demand": 0.5, "q80": 0.522716, "q90": 0.517754, "q95": 0.128413},
+    {"demand": 0.666667, "q80": 0.721862, "q90": 0.716717, "q95": 0.335205},
+    {"demand": 1.0, "q80": 1.0, "q90": 0.993771, "q95": 0.966407},
+    {"demand": 2.0, "q80": 1.964286, "q90": 1.988971, "q95": 1.924265}
+  ],
+  "fixed_n32_rescue": {
+    "loops": [8, 12, 16, 20, 24, 32, 40],
+    "late_accuracy_by_seed": [
+      [0.040527, 0.047852, 0.045898, 0.049316],
+      [0.187012, 0.139160, 0.192383, 0.162109],
+      [0.984375, 0.985352, 0.991699, 0.986816],
+      [0.974609, 0.996094, 0.996582, 0.998047],
+      [0.946289, 0.989258, 0.984863, 0.992676],
+      [0.153320, 0.333008, 0.170410, 0.629395],
+      [0.045410, 0.048828, 0.041992, 0.174316]
+    ],
+    "predicted_loops": 17,
+    "predicted_late_accuracy_by_seed": [0.996582, 0.992188, 0.996094, 0.996582]
+  },
+  "ood_n64_predicted_halting": [
+    {"demand": 0.5, "late_accuracy_by_seed": [0.927979, 0.545898, 0.908691, 0.050049]},
+    {"demand": 0.666667, "late_accuracy_by_seed": [0.874, 0.852, 0.967, 0.796]},
+    {"demand": 1.0, "late_accuracy_by_seed": [0.139, 0.599, 0.736, 0.049]},
+    {"demand": 2.0, "late_accuracy_by_seed": [0.046, 0.043, 0.043, 0.041]}
+  ],
+  "activation_damage": [
+    {"condition": "25% early", "slopes": [0.0, 0.0, 0.0, 0.0]},
+    {"condition": "25% no injection", "slopes": [0.0, 0.0, 0.0, 0.0]},
+    {"condition": "100% early", "slopes": [0.0, 0.0, 0.0, 0.0]},
+    {"condition": "100% middle", "slopes": [2.052, 0.034, 0.0, 0.0]},
+    {"condition": "100% late", "slopes": [-0.517, -0.069, 0.0, 0.0]}
+  ]
+}

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520">
+<rect width="900" height="520" fill="#fbfdff"/>
+<text x="54" y="42" font-family="Inter,Arial,sans-serif" font-size="25" font-weight="700" fill="#17212b">The stopping rule transfers out of distribution only selectively</text>
+<text x="54" y="68" font-family="Inter,Arial,sans-serif" font-size="14" fill="#64748b">Length 64 was never trained; each dot is one seed evaluated at its speed-predicted loop count</text>
+<line x1="92" y1="438.0" x2="850" y2="438.0" stroke="#dbe4ee"/>
+<text x="80" y="443.0" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="13" fill="#64748b">0</text>
+<line x1="92" y1="351.5" x2="850" y2="351.5" stroke="#dbe4ee"/>
+<text x="80" y="356.5" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="13" fill="#64748b">0.25</text>
+<line x1="92" y1="265.0" x2="850" y2="265.0" stroke="#dbe4ee"/>
+<text x="80" y="270.0" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="13" fill="#64748b">0.5</text>
+<line x1="92" y1="178.5" x2="850" y2="178.5" stroke="#dbe4ee"/>
+<text x="80" y="183.5" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="13" fill="#64748b">0.75</text>
+<line x1="92" y1="92.0" x2="850" y2="92.0" stroke="#dbe4ee"/>
+<text x="80" y="97.0" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="13" fill="#64748b">1</text>
+<line x1="150.0" y1="92" x2="150.0" y2="438" stroke="#dbe4ee"/>
+<text x="150.0" y="462" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" fill="#64748b">0.5</text>
+<line x1="350.0" y1="92" x2="350.0" y2="438" stroke="#dbe4ee"/>
+<text x="350.0" y="462" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" fill="#64748b">0.666667</text>
+<line x1="550.0" y1="92" x2="550.0" y2="438" stroke="#dbe4ee"/>
+<text x="550.0" y="462" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" fill="#64748b">1</text>
+<line x1="750.0" y1="92" x2="750.0" y2="438" stroke="#dbe4ee"/>
+<text x="750.0" y="462" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" fill="#64748b">2</text>
+<line x1="92" y1="438" x2="850" y2="438" stroke="#17212b" stroke-width="1.5"/>
+<line x1="92" y1="92" x2="92" y2="438" stroke="#17212b" stroke-width="1.5"/>
+<text x="471.0" y="500" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#17212b">contract demand  n / T</text>
+<text x="22" y="265.0" text-anchor="middle" transform="rotate(-90 22 265.0)" font-family="Inter,Arial,sans-serif" font-size="15" fill="#17212b">late-quartile accuracy at predicted halt</text>
+<circle cx="132.0" cy="116.9" r="6" fill="#009a88" opacity=".82"/>
+<circle cx="144.0" cy="249.1" r="6" fill="#009a88" opacity=".82"/>
+<circle cx="156.0" cy="123.6" r="6" fill="#009a88" opacity=".82"/>
+<circle cx="168.0" cy="420.7" r="6" fill="#009a88" opacity=".82"/>
+<line x1="121.0" y1="186.4" x2="179.0" y2="186.4" stroke="#17212b" stroke-width="4"/>
+<circle cx="332.0" cy="135.6" r="6" fill="#009a88" opacity=".82"/>
+<circle cx="344.0" cy="143.2" r="6" fill="#009a88" opacity=".82"/>
+<circle cx="356.0" cy="103.4" r="6" fill="#009a88" opacity=".82"/>
+<circle cx="368.0" cy="162.6" r="6" fill="#009a88" opacity=".82"/>
+<line x1="321.0" y1="139.4" x2="379.0" y2="139.4" stroke="#17212b" stroke-width="4"/>
+<circle cx="532.0" cy="389.9" r="6" fill="#009a88" opacity=".82"/>
+<circle cx="544.0" cy="230.7" r="6" fill="#009a88" opacity=".82"/>
+<circle cx="556.0" cy="183.3" r="6" fill="#009a88" opacity=".82"/>
+<circle cx="568.0" cy="421.0" r="6" fill="#009a88" opacity=".82"/>
+<line x1="521.0" y1="310.3" x2="579.0" y2="310.3" stroke="#17212b" stroke-width="4"/>
+<circle cx="732.0" cy="422.1" r="6" fill="#009a88" opacity=".82"/>
+<circle cx="744.0" cy="423.1" r="6" fill="#009a88" opacity=".82"/>
+<circle cx="756.0" cy="423.1" r="6" fill="#009a88" opacity=".82"/>
+<circle cx="768.0" cy="423.8" r="6" fill="#009a88" opacity=".82"/>
+<line x1="721.0" y1="423.1" x2="779.0" y2="423.1" stroke="#17212b" stroke-width="4"/>
+<text x="282" y="112" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="700" fill="#009a88">Demand 2/3: all seeds 0.80–0.97</text>
+</svg>
