@@ -367,7 +367,8 @@ def train_one(cfg: dict[str, Any], rank: int) -> dict[str, Any]:
         x, y = sample_batch(
             cfg["eval_batch_size"], length, table, device, fixed_length=length
         )
-        all_logits = model(x, max_loops, return_all=True)
+        with torch.no_grad():
+            all_logits = model(x, max_loops, return_all=True)
         frontier[str(length)] = {
             "max_eval_loops": max_loops,
             **measure_frontier(all_logits, y, thresholds),
