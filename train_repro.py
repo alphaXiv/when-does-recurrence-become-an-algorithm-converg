@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fresh S4 reproduction for arXiv:2607.20594.
+"""Fresh group-prefix-product reproduction for arXiv:2607.20594.
 
 One torchrun worker trains one independent seed. Rank 0 combines the four
 machine-readable summaries so the terminal log is the complete evidence record.
@@ -29,14 +29,34 @@ def utc_now() -> str:
     return dt.datetime.now(dt.timezone.utc).isoformat()
 
 
-def make_s4_table(device: torch.device | str = "cpu") -> torch.Tensor:
-    """Return composition table for S4 with (a ∘ b)(x) = a(b(x))."""
-    perms = list(itertools.permutations(range(4)))
+def permutation_is_even(perm: tuple[int, ...]) -> bool:
+    inversions = sum(
+        perm[i] > perm[j]
+        for i in range(len(perm))
+        for j in range(i + 1, len(perm))
+    )
+    return inversions % 2 == 0
+
+
+def make_group_table(
+    group: str, device: torch.device | str = "cpu"
+) -> torch.Tensor:
+    """Return S4 or A5 composition table with (a ∘ b)(x) = a(b(x))."""
+    if group == "S4":
+        perms = list(itertools.permutations(range(4)))
+    elif group == "A5":
+        perms = [
+            perm
+            for perm in itertools.permutations(range(5))
+            if permutation_is_even(perm)
+        ]
+    else:
+        raise ValueError(f"Unsupported group: {group}")
     index = {p: i for i, p in enumerate(perms)}
-    table = torch.empty((24, 24), dtype=torch.long)
+    table = torch.empty((len(perms), len(perms)), dtype=torch.long)
     for ia, a in enumerate(perms):
         for ib, b in enumerate(perms):
-            table[ia, ib] = index[tuple(a[b[x]] for x in range(4))]
+            table[ia, ib] = index[tuple(a[b[x]] for x in range(len(a)))]
     return table.to(device)
 
 
@@ -55,7 +75,8 @@ class TiedLoopedTransformer(nn.Module):
     def __init__(self, cfg: dict[str, Any]):
         super().__init__()
         d = cfg["d_model"]
-        self.embed = nn.Embedding(24, d)
+        self.vocab_size = cfg["vocab_size"]
+        self.embed = nn.Embedding(self.vocab_size, d)
         self.inject = nn.Linear(2 * d, d)
         layer = nn.TransformerEncoderLayer(
             d_model=d,
@@ -68,7 +89,7 @@ class TiedLoopedTransformer(nn.Module):
         )
         self.block = nn.TransformerEncoder(layer, num_layers=cfg["n_layers"])
         self.readout_norm = nn.LayerNorm(d)
-        self.head = nn.Linear(d, 24)
+        self.head = nn.Linear(d, self.vocab_size)
         # Start as a stable recurrent map while leaving input reinjection learnable.
         nn.init.zeros_(self.inject.bias)
         with torch.no_grad():
@@ -131,7 +152,7 @@ def sample_batch(
     fixed_length: int | None = None,
 ) -> tuple[torch.Tensor, torch.Tensor]:
     length = fixed_length or random.randint(2, max_length)
-    x = torch.randint(0, 24, (batch_size, length), device=device)
+    x = torch.randint(0, table.shape[0], (batch_size, length), device=device)
     return x, prefix_targets(x, table)
 
 
@@ -287,6 +308,7 @@ def activation_damage(
 
 
 def train_one(cfg: dict[str, Any], rank: int) -> dict[str, Any]:
+    cfg = dict(cfg)
     seed = int(cfg["seeds"][rank])
     random.seed(seed)
     np.random.seed(seed)
@@ -294,7 +316,8 @@ def train_one(cfg: dict[str, Any], rank: int) -> dict[str, Any]:
     torch.cuda.manual_seed_all(seed)
     device = torch.device(f"cuda:{rank}")
     torch.cuda.set_device(device)
-    table = make_s4_table(device)
+    table = make_group_table(cfg["group"], device)
+    cfg["vocab_size"] = int(table.shape[0])
     model = TiedLoopedTransformer(cfg).to(device)
     optimizer = torch.optim.AdamW(
         model.parameters(),
@@ -318,13 +341,35 @@ def train_one(cfg: dict[str, Any], rank: int) -> dict[str, Any]:
             optimizer.zero_grad(set_to_none=True)
             with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
                 logits = model(x, loops)
-                loss = F.cross_entropy(logits.reshape(-1, 24), y.reshape(-1))
+                if cfg.get("horizon_curriculum", False):
+                    horizon = min(
+                        x.shape[1],
+                        max(
+                            2,
+                            math.ceil(
+                                4
+                                + (max_length - 4)
+                                * local_step
+                                / cfg["max_steps_per_stage"]
+                            ),
+                        ),
+                    )
+                else:
+                    horizon = x.shape[1]
+                supervised_logits = logits[:, :horizon]
+                supervised_y = y[:, :horizon]
+                loss = F.cross_entropy(
+                    supervised_logits.reshape(-1, cfg["vocab_size"]),
+                    supervised_y.reshape(-1),
+                )
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), cfg["grad_clip"])
             optimizer.step()
             global_step += 1
             interval_loss += float(loss)
-            interval_acc += float((logits.argmax(-1) == y).float().mean())
+            interval_acc += float(
+                (supervised_logits.argmax(-1) == supervised_y).float().mean()
+            )
             if local_step % 500 == 0:
                 final_interval_acc = interval_acc / 500
                 record = {
@@ -367,7 +412,8 @@ def train_one(cfg: dict[str, Any], rank: int) -> dict[str, Any]:
         x, y = sample_batch(
             cfg["eval_batch_size"], length, table, device, fixed_length=length
         )
-        all_logits = model(x, max_loops, return_all=True)
+        with torch.no_grad():
+            all_logits = model(x, max_loops, return_all=True)
         frontier[str(length)] = {
             "max_eval_loops": max_loops,
             **measure_frontier(all_logits, y, thresholds),
@@ -419,6 +465,7 @@ def train_one(cfg: dict[str, Any], rank: int) -> dict[str, Any]:
     return {
         "evidence_version": 1,
         "paper_id": "2607.20594",
+        "group": cfg["group"],
         "backend": "kubernetes",
         "gpu_model": "NVIDIA RTX PRO 6000 Blackwell",
         "rank": rank,
@@ -443,7 +490,7 @@ def train_one(cfg: dict[str, Any], rank: int) -> dict[str, Any]:
 
 
 def smoke() -> None:
-    table = make_s4_table()
+    table = make_group_table("S4")
     identity = next(
         i for i, p in enumerate(itertools.permutations(range(4))) if p == (0, 1, 2, 3)
     )
