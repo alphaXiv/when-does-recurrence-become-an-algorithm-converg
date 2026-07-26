@@ -56,7 +56,9 @@ class TiedLoopedTransformer(nn.Module):
         super().__init__()
         d = cfg["d_model"]
         self.embed = nn.Embedding(24, d)
-        self.inject = nn.Linear(2 * d, d)
+        self.inject = (
+            nn.Linear(2 * d, d) if cfg.get("input_injection", True) else None
+        )
         layer = nn.TransformerEncoderLayer(
             d_model=d,
             nhead=cfg["n_heads"],
@@ -70,11 +72,12 @@ class TiedLoopedTransformer(nn.Module):
         self.readout_norm = nn.LayerNorm(d)
         self.head = nn.Linear(d, 24)
         # Start as a stable recurrent map while leaving input reinjection learnable.
-        nn.init.zeros_(self.inject.bias)
-        with torch.no_grad():
-            self.inject.weight.zero_()
-            self.inject.weight[:, :d].copy_(torch.eye(d))
-            self.inject.weight[:, d:].copy_(0.1 * torch.eye(d))
+        if self.inject is not None:
+            nn.init.zeros_(self.inject.bias)
+            with torch.no_grad():
+                self.inject.weight.zero_()
+                self.inject.weight[:, :d].copy_(torch.eye(d))
+                self.inject.weight[:, d:].copy_(0.1 * torch.eye(d))
 
     @staticmethod
     def causal_mask(length: int, device: torch.device) -> torch.Tensor:
@@ -83,7 +86,11 @@ class TiedLoopedTransformer(nn.Module):
         )
 
     def step(self, hidden: torch.Tensor, embedding: torch.Tensor) -> torch.Tensor:
-        z = self.inject(torch.cat((hidden, embedding), dim=-1))
+        z = (
+            self.inject(torch.cat((hidden, embedding), dim=-1))
+            if self.inject is not None
+            else hidden
+        )
         return self.block(z, mask=self.causal_mask(z.shape[1], z.device))
 
     def forward(
@@ -367,7 +374,8 @@ def train_one(cfg: dict[str, Any], rank: int) -> dict[str, Any]:
         x, y = sample_batch(
             cfg["eval_batch_size"], length, table, device, fixed_length=length
         )
-        all_logits = model(x, max_loops, return_all=True)
+        with torch.no_grad():
+            all_logits = model(x, max_loops, return_all=True)
         frontier[str(length)] = {
             "max_eval_loops": max_loops,
             **measure_frontier(all_logits, y, thresholds),

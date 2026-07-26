@@ -6,6 +6,7 @@
   "min_steps_per_stage": 6000,
   "max_steps_per_stage": 12000,
   "promotion_accuracy": 0.98,
+  "input_injection": false,
   "batch_size": 256,
   "d_model": 128,
   "n_heads": 4,
