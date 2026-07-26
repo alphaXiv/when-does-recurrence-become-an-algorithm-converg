@@ -152,7 +152,7 @@ def frontier_from_accuracy(acc: torch.Tensor, threshold: float) -> list[int]:
         good = row >= threshold
         bad = torch.where(~good)[0]
         values.append(int(bad[0]) if len(bad) else int(row.numel()))
-    return list(np.maximum.accumulate(values).astype(int))
+    return [int(value) for value in np.maximum.accumulate(values)]
 
 
 def measure_frontier(
