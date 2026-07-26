@@ -38,7 +38,7 @@ def _(mo):
     activation-damage slope appeared in only **1 of 12** tests.
 
     Compute: Kubernetes, NVIDIA RTX PRO 6000 Blackwell, four GPUs per run,
-    16 GPUs at peak concurrency, and 1.243 hours of fresh campaign wall time.
+    16 GPUs at peak concurrency, and 1.376 hours of fresh campaign wall time.
     """)
     return
 

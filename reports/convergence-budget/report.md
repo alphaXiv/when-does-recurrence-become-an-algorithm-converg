@@ -4,7 +4,7 @@ A looped transformer reuses one small block of neural-network weights many times
 
 **Verdict — partially reproduced.** On synthetic S4 prefix products, the compact model followed the requested convergence speed from demand 0.5 through 2 with exponent **0.968** (\(R^2=0.998\)), close to the paper’s **0.98 ± 0.04**; its unit contract measured **0.991**. A 4× demand exceeded the compact model’s capacity, while doubling width raised the full-range exponent to **0.897** (\(R^2=0.996\)). Extra loops rescued late positions in the slower contracts, but a matching activation-damage cone appeared in only **1 of 12** seed/location tests.
 
-**Scope.** This is a fresh, downscaled S4-first test with 0.44M- and 1.72M-parameter, two-layer transformers trained to length 32. A reduced A5 extension was also attempted. Every result came from Kubernetes on **NVIDIA RTX PRO 6000 Blackwell** GPUs, four per run and **16 at peak concurrency**; the fresh compute campaign spanned **1.243 wall hours** from the first successful contract start to the final successful run.
+**Scope.** This is a fresh, downscaled S4-first test with 0.44M- and 1.72M-parameter, two-layer transformers trained to length 32. A reduced A5 extension was also attempted. Every result came from Kubernetes on **NVIDIA RTX PRO 6000 Blackwell** GPUs, four per run and **16 at peak concurrency**; the fresh compute campaign spanned **1.376 wall hours** from the first Kubernetes submission to the final terminal run.
 
 ![Measured convergence speed against training demand](images/budget_law.svg)
 

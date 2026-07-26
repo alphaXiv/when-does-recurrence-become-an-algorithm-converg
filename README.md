@@ -6,7 +6,7 @@ This repository reproduces the central claim of [*When Does Recurrence Become an
 
 The primary evidence is downscaled to two-layer, 0.44M- and 1.72M-parameter models trained through length 32; exact optimizer, encoding, curriculum, and convergence details were reconstructed because author code was unavailable. A reduced A5 extension did not solve long sequences and is reported as a negative extension, not replacement evidence.
 
-All fresh formal runs used **Kubernetes** on **NVIDIA RTX PRO 6000 Blackwell** GPUs, four GPUs per experiment and **16 GPUs at peak concurrency**. The successful compute campaign spanned **1.243 wall hours** from the first successful contract start to the final successful run.
+All fresh formal runs used **Kubernetes** on **NVIDIA RTX PRO 6000 Blackwell** GPUs, four GPUs per experiment and **16 GPUs at peak concurrency**. The compute campaign spanned **1.376 wall hours** from the first Kubernetes submission to the final terminal run.
 
 ## Read and explore
 
