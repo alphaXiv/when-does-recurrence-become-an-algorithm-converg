@@ -18,5 +18,5 @@
   "eval_batch_size": 256,
   "eval_lengths": [16, 32, 64],
   "rescue_length": 64,
-  "patch_alpha": 0.25
+  "patch_alpha": 1.0
 }
